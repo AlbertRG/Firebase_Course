@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">FirebaseCourse</string>
+    <string name="empty_fields">Fields cannot be empty</string>
+    <string name="invalid_email">Invalid email address</string>
+    <string name="weak_password">Password must be at least 9 characters long</string>
+    <string name="password_requirements">Password must contain at least one lowercase, one uppercase, one digit, and one special character</string>
+    <string name="invalid_credentials">Invalid email or password</string>
+    <string name="default_error">An unexpected error occurred. Please try again later.</string>
 </resources>

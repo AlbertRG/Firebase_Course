@@ -16,7 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -25,6 +25,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -37,16 +38,17 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.albertrg.firebasecourse.R
 import com.albertrg.firebasecourse.ui.composables.SignBackground
 
 @Composable
 fun SignInScreen(
-    viewModel: SignInViewModel,
+    signInViewModel: SignInViewModel,
     navigateToHome: () -> Unit,
     navigateToSignUp: () -> Unit
 ) {
-    val signInState = viewModel.signInState.value
+    val signInState by signInViewModel.signInState.collectAsStateWithLifecycle()
 
     SignBackground()
     Column(
@@ -87,21 +89,21 @@ fun SignInScreen(
                 .weight(1f)
         ) {
             OutlinedTextField(
-                value = signInState.user,
-                onValueChange = { /*signInViewModel.onUserChanged(it)*/ },
+                value = signInState.email,
+                onValueChange = { signInViewModel.onEmailChanged(it) },
                 modifier = Modifier
                     .fillMaxWidth(),
                 label = {
-                    Text("User")
+                    Text("Email")
                 },
                 trailingIcon = {
                     Icon(
-                        imageVector = Icons.Filled.Person,
-                        contentDescription = "User",
+                        imageVector = Icons.Filled.Email,
+                        contentDescription = "Email",
                         tint = Color.White
                     )
                 },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 maxLines = 1,
                 colors = TextFieldDefaults.colors(
                     focusedIndicatorColor = Color.White,
@@ -118,7 +120,7 @@ fun SignInScreen(
                 value = signInState.password,
                 onValueChange = {
                     if (it.length <= 18) {
-                        /*signInViewModel.onPasswordChanged(it)*/
+                        signInViewModel.onPasswordChanged(it)
                     }
                 },
                 modifier = Modifier
@@ -134,7 +136,7 @@ fun SignInScreen(
                         R.drawable.baseline_visibility_off_24
                     IconButton(
                         onClick = {
-                            /*signInViewModel.onPasswordVisibilityChanged()*/
+                            signInViewModel.onPasswordVisibilityClicked()
                         }
                     ) {
                         Icon(
@@ -148,11 +150,6 @@ fun SignInScreen(
                 supportingText = {
                     Row {
                         Text(signInState.passSuppText)
-                        Spacer(Modifier.weight(1f))
-                        Text(
-                            text = "${signInState.password.length}/18",
-                            color = Color.White
-                        )
                     }
                 },
                 visualTransformation = if (signInState.isPasswordVisible) VisualTransformation.None
@@ -173,8 +170,10 @@ fun SignInScreen(
                 )
             )
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Start,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
@@ -187,21 +186,30 @@ fun SignInScreen(
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = "Forgot Password?",
+                    modifier = Modifier
+                        .clickable {
+                            /*TODO*/
+                        },
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold
+                )
             }
             Button(
                 onClick = {
-                    /*signInViewModel.validateCredentials()*/
+                    signInViewModel.onEmailSignInClicked(navigateToHome)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 16.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White,
-                    contentColor = Color(0xFF665AFF)
+                    contentColor = Color(0xFFFC9304)
                 )
             ) {
                 Text(
-                    text = "Sign in",
+                    text = "Sign In",
                     fontSize = 16.sp,
                 )
             }
