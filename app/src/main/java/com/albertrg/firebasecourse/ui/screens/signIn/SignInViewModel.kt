@@ -1,10 +1,12 @@
 package com.albertrg.firebasecourse.ui.screens.signIn
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.albertrg.firebasecourse.R
 import com.albertrg.firebasecourse.data.AuthService
 import com.albertrg.firebasecourse.utils.ResourceProvider
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -71,7 +73,7 @@ class SignInViewModel @Inject constructor(
             return
         }
 
-        signInEmail(navigateToHome)
+        signInWithEmail(navigateToHome)
     }
 
     private fun validateSignInInputs(email: String, password: String): String? {
@@ -86,12 +88,15 @@ class SignInViewModel @Inject constructor(
         return null
     }
 
-    fun signInEmail(navigateToHome: () -> Unit) {
+    fun signInWithEmail(navigateToHome: () -> Unit) {
         viewModelScope.launch {
 
             val result = runCatching {
                 withContext(Dispatchers.IO) {
-                    authService.signIn(_signInState.value.email, _signInState.value.password)
+                    authService.signInWithEmailAndPassword(
+                        _signInState.value.email,
+                        _signInState.value.password
+                    )
                 }
             }
 
@@ -108,6 +113,36 @@ class SignInViewModel @Inject constructor(
                 }
             )
 
+        }
+    }
+
+    fun onGoogleClicked(googleLauncherSignIn: (GoogleSignInClient) -> Unit) {
+        val gsc = authService.getGoogleClient()
+        googleLauncherSignIn(gsc)
+    }
+
+    fun signInWithGoogle(idToken: String, navigateToHome: () -> Unit) {
+        Log.d("SignInViewModel", "signInWithGoogle: $idToken")
+        viewModelScope.launch {
+
+            val result = runCatching {
+                withContext(Dispatchers.IO) {
+                    authService.signInWithGoogle(idToken)
+                }
+            }
+
+            result.fold(
+                onSuccess = { user ->
+                    if (user != null) {
+                        navigateToHome()
+                    }
+                },
+                onFailure = { exception ->
+                    updateStateWithError(
+                        exception.message ?: resourceProvider.getString(R.string.default_error)
+                    )
+                }
+            )
         }
     }
 

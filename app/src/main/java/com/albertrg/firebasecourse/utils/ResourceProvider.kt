@@ -12,4 +12,8 @@ class ResourceProvider @Inject constructor(
 
 ) {
     fun getString(@StringRes resId: Int): String = context.getString(resId)
+
+    fun getContext(): Context {
+        return context
+    }
 }

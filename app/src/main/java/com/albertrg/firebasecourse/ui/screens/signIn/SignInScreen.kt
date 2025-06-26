@@ -1,5 +1,8 @@
 package com.albertrg.firebasecourse.ui.screens.signIn
 
+import android.app.Activity.RESULT_OK
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -38,9 +41,14 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.albertrg.firebasecourse.R
 import com.albertrg.firebasecourse.ui.composables.SignBackground
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.common.api.ApiException
+import kotlinx.coroutines.launch
 
 @Composable
 fun SignInScreen(
@@ -49,6 +57,26 @@ fun SignInScreen(
     navigateToSignUp: () -> Unit
 ) {
     val signInState by signInViewModel.signInState.collectAsStateWithLifecycle()
+
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val googleLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult(),
+        onResult = { result ->
+            if (result.resultCode == RESULT_OK) {
+                lifecycleOwner.lifecycleScope.launch {
+                    val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+                    try {
+                        val account = task.getResult(ApiException::class.java)!!
+                        signInViewModel.signInWithGoogle(account.idToken!!) {
+                            navigateToHome()
+                        }
+                    } catch (e: ApiException) {
+                        print(e)
+                    }
+                }
+            }
+        }
+    )
 
     SignBackground()
     Column(
@@ -270,12 +298,16 @@ fun SignInScreen(
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 Button(
-                    onClick = { /*onGoogleSignIn()*/ },
+                    onClick = {
+                        signInViewModel.onGoogleClicked { signInClient ->
+                            val signInIntent = signInClient.signInIntent
+                            googleLauncher.launch(signInIntent)
+                        }
+                    },
                     modifier = Modifier
                         .padding(top = 16.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.White,
-                        contentColor = Color(0xFF665AFF)
+                        containerColor = Color.White
                     )
                 ) {
                     Icon(
@@ -290,7 +322,6 @@ fun SignInScreen(
                     )
                 }
             }
-
         }
     }
 
