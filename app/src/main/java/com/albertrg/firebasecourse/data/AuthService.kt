@@ -109,7 +109,8 @@ class AuthService @Inject constructor(
         val gso = GoogleSignInOptions
             .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(resourceProvider.getString(R.string.default_web_client_id))
-            .requestEmail().build()
+            .requestEmail()
+            .build()
         return GoogleSignIn.getClient(resourceProvider.getContext(), gso)
     }
 

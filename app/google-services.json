@@ -51,11 +51,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "715312493630-3m4kat0eu7cc1497f45b6r3df6c4nkr5.apps.googleusercontent.com",
+          "client_id": "715312493630-0hk54smtccli4so11jpqubgl1cc1ngsu.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.albertrg.firebasecourse.free.debug",
-            "certificate_hash": "b182773b690f4e43f1419f9c4cc32bb81c0b633b"
+            "certificate_hash": "8e717614219534472ba25719da99d2d8ed45f458"
           }
         },
         {
@@ -125,11 +125,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "715312493630-pk3a58atch7kg0aipa459qqms13dos8d.apps.googleusercontent.com",
+          "client_id": "715312493630-sf4nj32mje8m3bqdo91jbud7pfa7ianr.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.albertrg.firebasecourse.premium.debug",
-            "certificate_hash": "b182773b690f4e43f1419f9c4cc32bb81c0b633b"
+            "certificate_hash": "8e717614219534472ba25719da99d2d8ed45f458"
           }
         },
         {
