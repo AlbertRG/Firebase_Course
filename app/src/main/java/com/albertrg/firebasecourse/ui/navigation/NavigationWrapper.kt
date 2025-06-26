@@ -10,11 +10,30 @@ import com.albertrg.firebasecourse.ui.screens.signIn.SignInScreen
 import com.albertrg.firebasecourse.ui.screens.signIn.SignInViewModel
 import com.albertrg.firebasecourse.ui.screens.signUp.SignUpScreen
 import com.albertrg.firebasecourse.ui.screens.signUp.SignUpViewModel
+import com.albertrg.firebasecourse.ui.screens.splash.SplashScreen
+import com.albertrg.firebasecourse.ui.screens.splash.SplashViewModel
 
 @Composable
 fun NavigationWrapper() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = SignIn) {
+    NavHost(navController = navController, startDestination = Splash) {
+
+        composable<Splash> {
+            val splashViewModel = hiltViewModel<SplashViewModel>()
+            SplashScreen(
+                splashViewModel,
+                navigateToSignIn = {
+                    navController.navigate(SignIn) {
+                        popUpTo(Splash) { inclusive = true }
+                    }
+                },
+                navigateToHome = {
+                    navController.navigate(Home) {
+                        popUpTo(Splash) { inclusive = true }
+                    }
+                }
+            )
+        }
 
         composable<SignIn> {
             val signInViewModel = hiltViewModel<SignInViewModel>()

@@ -66,4 +66,10 @@ class AuthService @Inject constructor(
         }.getOrThrow()
     }
 
+    private fun getCurrentUser() = firebaseAuth.currentUser
+
+    fun isUserSignedIn(): Boolean {
+        return getCurrentUser() != null
+    }
+
 }
