@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.albertrg.firebasecourse.ui.screens.home.HomeScreen
+import com.albertrg.firebasecourse.ui.screens.home.HomeViewModel
 import com.albertrg.firebasecourse.ui.screens.signIn.SignInScreen
 import com.albertrg.firebasecourse.ui.screens.signIn.SignInViewModel
 import com.albertrg.firebasecourse.ui.screens.signUp.SignUpScreen
@@ -63,7 +64,15 @@ fun NavigationWrapper() {
         }
 
         composable<Home> {
-            HomeScreen()
+            val homeViewModel = hiltViewModel<HomeViewModel>()
+            HomeScreen(
+                homeViewModel,
+                navigateToSignIn = {
+                    navController.navigate(SignIn) {
+                        popUpTo(Home) { inclusive = true }
+                    }
+                }
+            )
         }
 
     }

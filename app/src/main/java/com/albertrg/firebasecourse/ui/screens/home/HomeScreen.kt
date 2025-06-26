@@ -17,7 +17,10 @@ import androidx.compose.ui.unit.sp
 import com.albertrg.firebasecourse.ui.composables.SignBackground
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    homeViewModel: HomeViewModel,
+    navigateToSignIn: () -> Unit
+) {
     BackHandler(true) {}
     SignBackground()
     Column(
@@ -28,7 +31,7 @@ fun HomeScreen() {
     ) {
         Button(
             onClick = {
-
+                homeViewModel.signOut(navigateToSignIn)
             },
             modifier = Modifier
                 .fillMaxWidth()

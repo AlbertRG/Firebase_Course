@@ -14,29 +14,7 @@ class AuthService @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ) {
 
-    suspend fun signIn(email: String, password: String): FirebaseUser? {
-        return runCatching {
-            firebaseAuth.signInWithEmailAndPassword(email, password).await().user
-        }.onFailure { exception ->
-            when (exception) {
-                is FirebaseAuthInvalidUserException -> {
-                    throw Exception("User does not exist. Please check your email.")
-                }
-
-                is FirebaseAuthInvalidCredentialsException -> {
-                    throw Exception("Invalid email or password. Please try again.")
-                }
-
-                is FirebaseNetworkException -> {
-                    throw Exception("A network error occurred. Please check your internet connection.")
-                }
-
-                else -> {
-                    throw Exception("An unexpected error occurred. Please try again later.")
-                }
-            }
-        }.getOrThrow()
-    }
+    private fun getCurrentUser() = firebaseAuth.currentUser
 
     suspend fun signUp(email: String, password: String): FirebaseUser? {
         return runCatching {
@@ -66,7 +44,33 @@ class AuthService @Inject constructor(
         }.getOrThrow()
     }
 
-    private fun getCurrentUser() = firebaseAuth.currentUser
+    suspend fun signIn(email: String, password: String): FirebaseUser? {
+        return runCatching {
+            firebaseAuth.signInWithEmailAndPassword(email, password).await().user
+        }.onFailure { exception ->
+            when (exception) {
+                is FirebaseAuthInvalidUserException -> {
+                    throw Exception("User does not exist. Please check your email.")
+                }
+
+                is FirebaseAuthInvalidCredentialsException -> {
+                    throw Exception("Invalid email or password. Please try again.")
+                }
+
+                is FirebaseNetworkException -> {
+                    throw Exception("A network error occurred. Please check your internet connection.")
+                }
+
+                else -> {
+                    throw Exception("An unexpected error occurred. Please try again later.")
+                }
+            }
+        }.getOrThrow()
+    }
+
+    fun signOut() {
+        firebaseAuth.signOut()
+    }
 
     fun isUserSignedIn(): Boolean {
         return getCurrentUser() != null
