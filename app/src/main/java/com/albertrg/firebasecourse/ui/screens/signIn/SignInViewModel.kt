@@ -1,11 +1,12 @@
 package com.albertrg.firebasecourse.ui.screens.signIn
 
-import android.util.Log
+import android.app.Activity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.albertrg.firebasecourse.R
 import com.albertrg.firebasecourse.data.AuthService
 import com.albertrg.firebasecourse.utils.ResourceProvider
+import com.facebook.AccessToken
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -122,7 +123,6 @@ class SignInViewModel @Inject constructor(
     }
 
     fun signInWithGoogle(idToken: String, navigateToHome: () -> Unit) {
-        Log.d("SignInViewModel", "signInWithGoogle: $idToken")
         viewModelScope.launch {
 
             val result = runCatching {
@@ -145,5 +145,35 @@ class SignInViewModel @Inject constructor(
             )
         }
     }
+
+    fun onFacebookClicked(onGetActivity: (Activity) -> Unit) {
+
+    }
+
+    fun signInWithFacebook(accessToken: AccessToken, navigateToHome: () -> Unit) {
+        viewModelScope.launch {
+
+            val result = runCatching {
+                withContext(Dispatchers.IO) {
+                    authService.signInWithFacebook(accessToken)
+                }
+            }
+
+            result.fold(
+                onSuccess = { user ->
+                    if (user != null) {
+                        navigateToHome()
+                    }
+                },
+                onFailure = { exception ->
+                    updateStateWithError(
+                        exception.message ?: resourceProvider.getString(R.string.default_error)
+                    )
+                }
+            )
+
+        }
+    }
+
 
 }

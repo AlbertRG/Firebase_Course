@@ -2,11 +2,13 @@ package com.albertrg.firebasecourse.data
 
 import com.albertrg.firebasecourse.R
 import com.albertrg.firebasecourse.utils.ResourceProvider
+import com.facebook.AccessToken
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
@@ -116,6 +118,11 @@ class AuthService @Inject constructor(
 
     suspend fun signInWithGoogle(idToken: String): FirebaseUser? {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
+        return completeSignUpWithCredential(credential)
+    }
+
+    suspend fun signInWithFacebook(accessToken: AccessToken): FirebaseUser? {
+        val credential = FacebookAuthProvider.getCredential(accessToken.token)
         return completeSignUpWithCredential(credential)
     }
 

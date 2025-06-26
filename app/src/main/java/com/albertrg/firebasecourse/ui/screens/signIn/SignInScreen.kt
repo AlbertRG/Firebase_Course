@@ -46,6 +46,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.albertrg.firebasecourse.R
 import com.albertrg.firebasecourse.ui.composables.SignBackground
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import kotlinx.coroutines.launch
@@ -58,6 +63,7 @@ fun SignInScreen(
 ) {
     val signInState by signInViewModel.signInState.collectAsStateWithLifecycle()
 
+    // Google Sign In
     val lifecycleOwner = LocalLifecycleOwner.current
     val googleLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult(),
@@ -77,6 +83,9 @@ fun SignInScreen(
             }
         }
     )
+
+    // Facebook Sign In
+    lateinit var callbackManager: CallbackManager
 
     SignBackground()
     Column(
@@ -316,11 +325,92 @@ fun SignInScreen(
                         modifier = Modifier.size(24.dp),
                         tint = Color.Unspecified
                     )
+                    Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "Google",
+                        text = "Google  ",
                         color = Color.Black,
                     )
                 }
+                Button(
+                    onClick = {
+
+                    },
+                    modifier = Modifier
+                        .padding(top = 16.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF1F2828)
+                    )
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_github),
+                        contentDescription = "GitHub Icon",
+                        modifier = Modifier.size(24.dp),
+                        tint = Color.White
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = "GitHub  ",
+                        color = Color.White,
+                    )
+                }
+
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Button(
+                    onClick = {
+
+                        callbackManager = CallbackManager.Factory.create()
+
+                        signInViewModel.onFacebookClicked { activity ->
+                            LoginManager.getInstance().logInWithReadPermissions(
+                                activity,
+                                listOf("email", "public_profile")
+                            )
+                        }
+
+                        LoginManager.getInstance().registerCallback(
+                            callbackManager,
+                            object : FacebookCallback<LoginResult> {
+
+                                override fun onSuccess(result: LoginResult) {
+                                    signInViewModel.signInWithFacebook(result.accessToken) {
+                                        navigateToHome()
+                                    }
+                                }
+
+                                override fun onCancel() {
+                                    // El usuario canceló el login
+                                }
+
+                                override fun onError(error: FacebookException) {
+                                    // Error en el login
+                                }
+
+                            })
+
+                    },
+                    modifier = Modifier
+                        .padding(top = 16.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF1877F2)
+                    )
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_facebook),
+                        contentDescription = "Facebook Icon",
+                        modifier = Modifier.size(24.dp),
+                        tint = Color.Unspecified
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = "Facebook",
+                        color = Color.White,
+                    )
+                }
+
             }
         }
     }
