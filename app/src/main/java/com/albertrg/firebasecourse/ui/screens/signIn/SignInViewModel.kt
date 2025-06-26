@@ -91,7 +91,7 @@ class SignInViewModel @Inject constructor(
 
             val result = runCatching {
                 withContext(Dispatchers.IO) {
-                    authService.login(_signInState.value.email, _signInState.value.password)
+                    authService.signIn(_signInState.value.email, _signInState.value.password)
                 }
             }
 

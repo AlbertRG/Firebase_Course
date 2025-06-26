@@ -1,12 +1,12 @@
 package com.albertrg.firebasecourse.ui.screens.signUp
 
+import androidx.compose.runtime.Stable
+
+@Stable
 data class SignUpState(
-    val isSignInSuccessful: Boolean = false,
-    val signInError: String? = null,
-    val user: String = "",
+    val email: String = "",
     val password: String = "",
-    var isPasswordVisible: Boolean = false,
-    val passSuppText: String = "",
     val isPasswordError: Boolean = false,
-    val isBiometricEnabled: Boolean = false
+    val passSuppText: String = "",
+    var isPasswordVisible: Boolean = false
 )

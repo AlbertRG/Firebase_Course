@@ -4,14 +4,15 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -20,7 +21,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,21 +33,16 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.albertrg.firebasecourse.R
 import com.albertrg.firebasecourse.ui.composables.SignBackground
 
 @Composable
 fun SignUpScreen(
-    viewModel: SignUpViewModel,
+    signUpViewModel: SignUpViewModel,
     navigateToSignIn: () -> Unit
 ) {
-    val signUpState = viewModel.signUpState.value
-
-    LaunchedEffect(/*signUpState.isSignUpSuccessful*/ false) {
-        if (/*signUpState.isSignUpSuccessful*/ false) {
-            navigateToSignIn()
-        }
-    }
+    val signUpState by signUpViewModel.signUpState.collectAsStateWithLifecycle()
 
     SignBackground()
     Column(
@@ -87,17 +83,17 @@ fun SignUpScreen(
                 .weight(1f)
         ) {
             OutlinedTextField(
-                value = signUpState.user,
-                onValueChange = { /*signUpViewModel.onUserChanged(it)*/ },
+                value = signUpState.email,
+                onValueChange = { signUpViewModel.onEmailChanged(it) },
                 modifier = Modifier
                     .fillMaxWidth(),
                 label = {
-                    Text("User")
+                    Text("Email")
                 },
                 trailingIcon = {
                     Icon(
-                        imageVector = Icons.Filled.Person,
-                        contentDescription = "User",
+                        imageVector = Icons.Filled.Email,
+                        contentDescription = "Email",
                         tint = Color.White
                     )
                 },
@@ -118,7 +114,7 @@ fun SignUpScreen(
                 value = signUpState.password,
                 onValueChange = {
                     if (it.length <= 18) {
-                        /*signUpViewModel.onPasswordChanged(it)*/
+                        signUpViewModel.onPasswordChanged(it)
                     }
                 },
                 modifier = Modifier
@@ -134,7 +130,7 @@ fun SignUpScreen(
                         R.drawable.baseline_visibility_off_24
                     IconButton(
                         onClick = {
-                            /*signUpViewModel.onPasswordVisibilityChanged()*/
+                            signUpViewModel.onPasswordVisibilityClicked()
                         }
                     ) {
                         Icon(
@@ -146,10 +142,20 @@ fun SignUpScreen(
                     }
                 },
                 supportingText = {
-                    Row {
-                        Text(signUpState.passSuppText)
-                        Spacer(Modifier.weight(1f))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(32.dp),
+                    ) {
                         Text(
+                            signUpState.passSuppText,
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(end = 8.dp)
+
+                        )
+                        Text(
+                            modifier = Modifier.width(35.dp),
                             text = "${signUpState.password.length}/18",
                             color = Color.White
                         )
@@ -174,14 +180,14 @@ fun SignUpScreen(
             )
             Button(
                 onClick = {
-                    /*signUpViewModel.validateAndSignUp()*/
+                    signUpViewModel.onEmailSignUpClicked(navigateToSignIn)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 16.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White,
-                    contentColor = Color(0xFF665AFF)
+                    contentColor = Color(0xFFFC9304)
                 )
             ) {
                 Text(

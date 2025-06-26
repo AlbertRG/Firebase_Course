@@ -148,8 +148,22 @@ fun SignInScreen(
                     }
                 },
                 supportingText = {
-                    Row {
-                        Text(signInState.passSuppText)
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        Text(
+                            signInState.passSuppText,
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(end = 8.dp)
+
+                        )
+                        Text(
+                            modifier = Modifier.width(35.dp),
+                            text = "${signInState.password.length}/18",
+                            color = Color.White
+                        )
                     }
                 },
                 visualTransformation = if (signInState.isPasswordVisible) VisualTransformation.None
