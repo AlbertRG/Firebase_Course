@@ -69,7 +69,7 @@ fun SignInScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.firebase),
+                    painter = painterResource(id = R.drawable.ic_firebase),
                     contentDescription = "App Logo",
                     modifier = Modifier
                         .size(48.dp)
@@ -279,7 +279,7 @@ fun SignInScreen(
                     )
                 ) {
                     Icon(
-                        painter = painterResource(id = R.drawable.google),
+                        painter = painterResource(id = R.drawable.ic_google),
                         contentDescription = "Google Icon",
                         modifier = Modifier.size(24.dp),
                         tint = Color.Unspecified

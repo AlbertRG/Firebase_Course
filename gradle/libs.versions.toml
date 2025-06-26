@@ -2,6 +2,7 @@
 agp = "8.11.0"
 ksp = "2.2.0-2.0.2"
 firebaseBom = "33.15.0"
+authService = "21.3.0"
 crashlytics = "3.0.4"
 googleService = "4.4.2"
 kotlin = "2.2.0"
@@ -41,6 +42,7 @@ firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "fir
 firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
 firebase-auth = { module = "com.google.firebase:firebase-auth-ktx" }
+firebase-auth-services = { module = "com.google.android.gms:play-services-auth", version.ref = "authService" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore-ktx" }
 firebase-realtime = { module = "com.google.firebase:firebase-database-ktx" }
 

@@ -63,7 +63,7 @@ fun SignUpScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.firebase),
+                    painter = painterResource(id = R.drawable.ic_firebase),
                     contentDescription = "App Logo",
                     modifier = Modifier
                         .size(48.dp)

@@ -12,7 +12,20 @@
           "package_name": "com.albertrg.firebasecourse.free"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "715312493630-b4pj38r28nua4o5spgchdudm3u2o9ivv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.albertrg.firebasecourse.free",
+            "certificate_hash": "f151272aee41a02e7ea97f2ee8dd9bd56ea5b83a"
+          }
+        },
+        {
+          "client_id": "715312493630-4t5bo561erf0hnhce1e4gg3pbi6fnfe4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBxavv6TXBy3MC0uNXh_u7c1_v95BwFCeU"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "715312493630-4t5bo561erf0hnhce1e4gg3pbi6fnfe4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     },
@@ -31,7 +49,20 @@
           "package_name": "com.albertrg.firebasecourse.free.debug"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "715312493630-3m4kat0eu7cc1497f45b6r3df6c4nkr5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.albertrg.firebasecourse.free.debug",
+            "certificate_hash": "b182773b690f4e43f1419f9c4cc32bb81c0b633b"
+          }
+        },
+        {
+          "client_id": "715312493630-4t5bo561erf0hnhce1e4gg3pbi6fnfe4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBxavv6TXBy3MC0uNXh_u7c1_v95BwFCeU"
@@ -39,7 +70,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "715312493630-4t5bo561erf0hnhce1e4gg3pbi6fnfe4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     },
@@ -50,7 +86,20 @@
           "package_name": "com.albertrg.firebasecourse.premium"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "715312493630-58slcuhbtvvs5c1as4uiok8u15n93tep.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.albertrg.firebasecourse.premium",
+            "certificate_hash": "f151272aee41a02e7ea97f2ee8dd9bd56ea5b83a"
+          }
+        },
+        {
+          "client_id": "715312493630-4t5bo561erf0hnhce1e4gg3pbi6fnfe4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBxavv6TXBy3MC0uNXh_u7c1_v95BwFCeU"
@@ -58,7 +107,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "715312493630-4t5bo561erf0hnhce1e4gg3pbi6fnfe4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     },
@@ -69,7 +123,20 @@
           "package_name": "com.albertrg.firebasecourse.premium.debug"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "715312493630-pk3a58atch7kg0aipa459qqms13dos8d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.albertrg.firebasecourse.premium.debug",
+            "certificate_hash": "b182773b690f4e43f1419f9c4cc32bb81c0b633b"
+          }
+        },
+        {
+          "client_id": "715312493630-4t5bo561erf0hnhce1e4gg3pbi6fnfe4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBxavv6TXBy3MC0uNXh_u7c1_v95BwFCeU"
@@ -77,7 +144,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "715312493630-4t5bo561erf0hnhce1e4gg3pbi6fnfe4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
